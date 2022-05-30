@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <changeSet id="060508" author="esempla">
+        <createTable tableName="authorities">
+            <column name="role" type="varchar(30)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+        </createTable>
+        <createTable tableName="user_role">
+            <column name="user_id" type="bigserial">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role" type="varchar(30)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addPrimaryKey tableName="user_role" columnNames="role, user_id"/>
+        <addForeignKeyConstraint baseTableName="user_role"
+                                 baseColumnNames="role"
+                                 constraintName="fk_role_name"
+                                 referencedTableName="authorities"
+                                 referencedColumnNames="role"/>
+        <addForeignKeyConstraint baseTableName="user_role"
+                                 baseColumnNames="user_id"
+                                 constraintName="fk_user_role_name"
+                                 referencedTableName="user"
+                                 referencedColumnNames="id"/>
+        <loadData
+                file="config/liquibase/change-log/data/authorities.csv"
+                separator=";"
+                tableName="authorities">
+            <column name="role" type="string"/>
+        </loadData>
+        <loadData
+                file="config/liquibase/change-log/data/user_role.csv"
+                separator=";"
+                tableName="user_role">
+            <column name="user_id" type="numeric"/>
+            <column name="role" type="string"/>
+        </loadData>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <changeSet id="280412-1" author="esempla">
+        <createTable tableName="comment">
+            <column name="comment_id" type="bigserial">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="content" type="varchar(1000)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="create_time" type="${datetimeType}">
+                <constraints nullable="true"/>
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints nullable="true"  uniqueConstraintName="comment_user_id"/>
+            </column>
+            <column name="post_id" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+        <loadData
+                file="config/liquibase/change-log/data/comment.csv"
+                separator=";"
+                tableName="comment">
+            <!--usePreparedStatements="true">-->
+            <column name="comment_id" type="numeric"/>
+            <column name="content" type="string"/>
+            <column name="create_time" type="date"/>
+            <column name="user_id" type="numeric"/>
+            <column name="post_id" type="numeric"/>
+            <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
+        </loadData>
+    </changeSet>
+    <changeSet id="280412-2" author="esempla">
+        <addForeignKeyConstraint baseTableName="comment"
+                                 baseColumnNames="user_id"
+                                 constraintName="fk_comment_user_id"
+                                 referencedTableName="user"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="comment"
+                                 baseColumnNames="post_id"
+                                 constraintName="fk_comment_post_id"
+                                 referencedTableName="post"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+</databaseChangeLog>

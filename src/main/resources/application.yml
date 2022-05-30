@@ -1,0 +1,28 @@
+logging:
+  level:
+    ROOT: DEBUG
+  file:
+    path: ${user.home}
+    name: ${user.home}/logFile.log
+blog:
+  client-url: http://172.28.4.250:8080
+  username: admin
+  password: admin
+
+spring:
+  jpa:
+    properties:
+      hibernate.format_sql: true
+    show-sql: true
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.xml
+  servlet:
+    multipart:
+      max-file-size: 1MB
+      max-request-size: 1MB
+  datasource:
+    url: jdbc:postgresql://localhost:5432/blog
+    username: postgres
+    password: postgres
+    hikari:
+      auto-commit: false

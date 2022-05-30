@@ -1,0 +1,4 @@
+id;username;password;first_name;last_name;email;status
+1;admin;$2a$12$FGyXPtbNt6neN.VI.5ERReIcfdiTujw1ydggG2VzBUy0uiON4L6hG;Administrator;Administrator;admin@localhost;Active
+2;user;$2a$12$C/2F/IhWRrC7yMMEHoDowesM36BPRZPSRoP0jycZ1LcVmKGf4SCPG;User;User;user@localhost;Active
+3;manager;$2a$12$famDPBQeWR3vutyxjFfwbelHmn2UTzGnlnS5vkG.4Sx1cNXdIHPUG;Manager;Manager;manager@localhost;Active

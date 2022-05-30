@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <changeSet id="280411-1" author="esempla">
+        <createTable tableName="post">
+            <column name="id" type="bigserial">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="title" type="varchar(40)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="content" type="varchar(1000)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="create_time" type="${datetimeType}">
+                <constraints nullable="true"/>
+            </column>
+            <column name="update_time" type="${datetimeType}">
+                <constraints nullable="true"/>
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+            <column name="status" type="varchar(30)">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+        <loadData
+                file="config/liquibase/change-log/data/post.csv"
+                separator=";"
+                tableName="post">
+            <!--usePreparedStatements="true">-->
+            <column name="id" type="numeric"/>
+            <column name="title" type="string"/>
+            <column name="content" type="string"/>
+            <column name="create_time" type="date"/>
+            <column name="update_time" type="date"/>
+            <column name="user_id" type="numeric"/>
+            <column name="status" type="string"/>
+            <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
+        </loadData>
+    </changeSet>
+    <changeSet id="280411-2" author="esempla">
+        <addForeignKeyConstraint baseTableName="post"
+                                 baseColumnNames="user_id"
+                                 constraintName="fk_post_user_id"
+                                 referencedTableName="user"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="post"
+                                 baseColumnNames="status"
+                                 constraintName="fk_post_user_status"
+                                 referencedTableName="post_status"
+                                 referencedColumnNames="status"/>
+    </changeSet>
+</databaseChangeLog>

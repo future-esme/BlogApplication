@@ -1,0 +1,22 @@
+version: '2'
+
+services:
+  db:
+    image: 'postgres:13-alpine'
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=blog
+    ports:
+      - "5430:5432"
+  app:
+    image: 'registry.hub.docker.com/2014003/demo:2.0'
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/blog
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+
