@@ -1,9 +1,7 @@
 package com.esempla.test.demo.service;
 
-import com.esempla.test.demo.config.ConfigProperties;
-import com.esempla.test.demo.domain.Comment;
+import com.esempla.test.demo.config.AppProperties;
 import com.esempla.test.demo.domain.Post;
-import com.esempla.test.demo.service.dto.CommentDto;
 import com.esempla.test.demo.service.dto.PostDto;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -18,11 +16,11 @@ public class ClientPostService {
     private String CLIENT_GET_POSTS_URL;
     private String CLIENT_GET_POST_URL;
 
-    private final ConfigProperties properties;
+    private final AppProperties properties;
     private final HttpEntity httpEntity;
     private final RestTemplate restTemplate;
 
-    public ClientPostService(ConfigProperties properties, HttpEntity httpEntity, RestTemplate restTemplate) {
+    public ClientPostService(AppProperties properties, HttpEntity httpEntity, RestTemplate restTemplate) {
         this.properties = properties;
         this.httpEntity = httpEntity;
         this.restTemplate = restTemplate;

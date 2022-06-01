@@ -12,9 +12,9 @@ import java.util.Base64;
 @Configuration
 public class AppConfiguration {
 
-    private final ConfigProperties properties;
+    private final AppProperties properties;
 
-    public AppConfiguration(ConfigProperties properties) {
+    public AppConfiguration(AppProperties properties) {
         this.properties = properties;
     }
 

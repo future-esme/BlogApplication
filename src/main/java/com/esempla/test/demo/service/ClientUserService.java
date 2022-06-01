@@ -1,6 +1,6 @@
 package com.esempla.test.demo.service;
 
-import com.esempla.test.demo.config.ConfigProperties;
+import com.esempla.test.demo.config.AppProperties;
 import com.esempla.test.demo.controller.CommentController;
 import com.esempla.test.demo.domain.User;
 import com.esempla.test.demo.service.dto.UserDto;
@@ -22,11 +22,11 @@ public class ClientUserService {
     private String CLIENT_GET_USER_URL;
     private String CLIENT_POST_USER_URL;
 
-    private final ConfigProperties properties;
+    private final AppProperties properties;
     private final HttpEntity httpEntity;
     private final RestTemplate restTemplate;
 
-    public ClientUserService(ConfigProperties properties, HttpEntity httpEntity, RestTemplate restTemplate) {
+    public ClientUserService(AppProperties properties, HttpEntity httpEntity, RestTemplate restTemplate) {
         this.properties = properties;
         this.httpEntity = httpEntity;
         this.restTemplate = restTemplate;

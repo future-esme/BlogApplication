@@ -4,10 +4,13 @@ logging:
   file:
     path: ${user.home}
     name: ${user.home}/logFile.log
+
 blog:
-  client-url: http://172.28.4.250:8080
-  username: admin
-  password: admin
+  minio:
+    url: http://172.28.14.1:9000
+    bucket-name: demo
+    access-key: access_key
+    secret-key: secret_key
 
 spring:
   jpa:
@@ -26,3 +29,4 @@ spring:
     password: postgres
     hikari:
       auto-commit: false
+

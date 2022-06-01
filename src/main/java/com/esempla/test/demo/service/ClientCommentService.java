@@ -1,12 +1,8 @@
 package com.esempla.test.demo.service;
 
-import com.esempla.test.demo.config.ConfigProperties;
-import com.esempla.test.demo.controller.ClientUserController;
-import com.esempla.test.demo.controller.CommentController;
+import com.esempla.test.demo.config.AppProperties;
 import com.esempla.test.demo.domain.Comment;
-import com.esempla.test.demo.domain.User;
 import com.esempla.test.demo.service.dto.CommentDto;
-import com.esempla.test.demo.service.dto.UserDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
@@ -26,11 +22,11 @@ public class ClientCommentService {
     private String CLIENT_GET_COMMENTS_URL;
     private String CLIENT_GET_COMMENT_URL;
 
-    private final ConfigProperties properties;
+    private final AppProperties properties;
     private final HttpEntity httpEntity;
     private final RestTemplate restTemplate;
 
-    public ClientCommentService(ConfigProperties properties, HttpEntity httpEntity, RestTemplate restTemplate) {
+    public ClientCommentService(AppProperties properties, HttpEntity httpEntity, RestTemplate restTemplate) {
         this.properties = properties;
         this.httpEntity = httpEntity;
         this.restTemplate = restTemplate;

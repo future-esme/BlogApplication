@@ -2,7 +2,6 @@ package com.esempla.test.demo.service;
 
 import com.esempla.test.demo.domain.Comment;
 import com.esempla.test.demo.domain.Post;
-import com.esempla.test.demo.domain.Storage;
 import com.esempla.test.demo.repository.CommentRepository;
 import com.esempla.test.demo.repository.PostRepository;
 import com.esempla.test.demo.repository.StorageRepository;
@@ -21,19 +20,15 @@ import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 
-import javax.imageio.ImageIO;
 import javax.xml.bind.DatatypeConverter;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -51,11 +46,13 @@ public class PdfWriterService {
     private final CommentRepository commentRepository;
     private BaseColor primaryColor;
     private BaseColor secondaryColor;
+    private final MinioService minioService;
 
-    public PdfWriterService(StorageRepository storageRepository, PostRepository postRepository, CommentRepository commentRepository) {
+    public PdfWriterService(StorageRepository storageRepository, PostRepository postRepository, CommentRepository commentRepository, MinioService minioService) {
         this.storageRepository = storageRepository;
         this.postRepository = postRepository;
         this.commentRepository = commentRepository;
+        this.minioService = minioService;
     }
 
     public void initializeColors() {
@@ -109,20 +106,21 @@ public class PdfWriterService {
                 contentByte.restoreState();*/
                 PdfContentByte canvas = writer.getDirectContentUnder();
 
+                /* Get image from data base
                 byte[] imagebytes = DatatypeConverter.parseBase64Binary(storageRepository.findStorageByName("template").getContent());
 
                 Image image = Image.getInstance(imagebytes);
-                //Image image = Image.getInstance("template1.jpg");
+                */
 
-                // Storage storage = storageRepository.findStorageByName("template1");
-                //Image image = Image.getInstance(storage.getContent());
-
-
-                /*byte[] fileContent = Files.readAllBytes(Path.of(IMAGE));
+                /* Get image from classpath
+                * when project is build, the classpath changes
+                byte[] fileContent = Files.readAllBytes(Path.of(IMAGE));
                 Storage storage = new Storage();
                 storage.setName("template1");
                 storage.setContent(fileContent);
                 storageRepository.save(storage);*/
+
+                Image image = Image.getInstance(IOUtils.toByteArray(minioService.getObject("template1.jpg")));
 
                 image.scaleAbsolute(PageSize.A4.getWidth(), PageSize.A4.getHeight());
                 image.setAbsolutePosition(0, 0);
@@ -180,9 +178,7 @@ public class PdfWriterService {
 
             PdfContentByte canvas = writer.getDirectContentUnder();
 
-            byte[] imagebytes = DatatypeConverter.parseBase64Binary(storageRepository.findStorageByName("template2").getContent());
-
-            Image image = Image.getInstance(imagebytes);
+            Image image = Image.getInstance(IOUtils.toByteArray(minioService.getObject("template2.jpg")));
 
             // Storage storage = storageRepository.findStorageByName("template1");
             //Image image = Image.getInstance(storage.getContent());
